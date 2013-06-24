@@ -26,7 +26,9 @@ define([
     "esri/geometry/Point",
     "esri/geometry/webMercatorUtils",
     "esri/SpatialReference",
-    "esri/InfoTemplate"
+    "esri/InfoTemplate",
+    "esri/dijit/Geocoder",
+    "esri/dijit/Legend"
 ],
 function(
     ready, 
@@ -44,7 +46,9 @@ function(
     Point,
     webMercatorUtils,
     SpatialReference,
-    InfoTemplate
+    InfoTemplate,
+    Geocoder,
+    Legend
 ) {
 
 
@@ -440,6 +444,12 @@ function(
                 //console.log(this.config);
 
                 this.map = response.map;
+                
+                
+                var geocoder = new Geocoder({
+                    map:this.map
+                },dom.byId("geocoder"));
+                geocoder.startup();
                 
                 
                 

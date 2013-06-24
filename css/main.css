@@ -48,6 +48,24 @@ html,body {
 /*Example of a rule that will be applied if the app is viewed in a browser wtih a RTL locale like Hebrew or Arabic.*/
 }
 
+#geocoder{
+    position: absolute;
+    z-index: 99;
+    top:20px;
+    right:20px;
+}
+
+#legendDivContainer{
+    position: absolute;
+    top:50px;
+    right:20px;
+    z-index: 99;
+    width:300px;
+    height: 500px;
+    overflow: auto;
+    display: none;
+}
+
 #draw {
 	top:20px;
 	left:80px;
