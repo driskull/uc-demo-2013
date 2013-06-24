@@ -1,0 +1,132 @@
+html,body {
+	padding:0;
+	margin:0;
+	height:100%;
+}
+
+#bc .dijitGutter {
+	display:none;
+}
+
+#mapDiv {
+	padding:0;
+	margin:0;
+	height:100%;
+	position:relative;
+}
+
+#bc {
+	width:100%;
+	height:100%;
+	padding:0;
+	margin:0;
+	border:0;
+}
+
+#cptop {
+	width:100%;
+	height:50px;
+	padding:0;
+	margin:0;
+	border:0;
+	background:#000;
+	color:#fff;
+	font-size:2em;
+	text-align:center;
+	line-height:50px;
+}
+
+#cpcenter {
+	width:100%;
+	height:100%;
+	padding:0;
+	margin:0;
+	border:0;
+}
+
+.esriRtl label {
+/*Example of a rule that will be applied if the app is viewed in a browser wtih a RTL locale like Hebrew or Arabic.*/
+}
+
+#draw {
+	top:20px;
+	left:80px;
+	position:absolute;
+	z-index:99;
+	display:block;
+}
+
+#drawButton,#clearButton {
+	display:block;
+	float:left;
+	padding:10px;
+	border:2px solid #666;
+	font-weight:700;
+	background:#fff;
+	color:#666;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	cursor:pointer;
+	margin-right:10px;
+}
+
+#drawButton:hover,#clearButton:hover {
+	border-color:#333;
+}
+
+#drawButton:active,#clearButton:active {
+	border-color:#000;
+}
+
+#geoData {
+	position:absolute;
+	z-index:99;
+	bottom:40px;
+	left:0;
+	width:100%;
+	text-align:center;
+	display:none;
+	-moz-user-select:none;
+	-webkit-user-select:none;
+	user-select:none;
+}
+
+#geoData .panel {
+	text-align:center;
+	display:inline-block;
+	color:#fff;
+	padding:20px;
+	background:rgba(0,0,0,0.75);
+	border-radius:5px;
+	-webkit-box-shadow:2px 2px 4px 0 rgba(0,0,0,0.6);
+	box-shadow:2px 2px 4px 0 rgba(0,0,0,0.6);
+	margin:0 10px 20px;
+}
+
+#geoData h2 {
+	font-size:4em;
+	font-weight:700;
+	margin:0;
+	padding:0;
+}
+
+#geoData p {
+	margin:0;
+	padding:0;
+	font-size:1em;
+	font-weight:700;
+}
+
+#chartContainer {
+	display:block;
+	text-align:center;
+	margin-bottom:20px;
+}
+
+#ageChart {
+	display:inline-block;
+	background:rgba(0,0,0,0.75);
+	padding:10px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+}
