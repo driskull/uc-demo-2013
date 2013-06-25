@@ -84,10 +84,16 @@ function (
                 this._createWebMap();
             }));
         },
+        _hideLoading: function(){
+            domStyle.set(dom.byId('loading'), 'display', 'none');
+        },
+        _showLoading: function(){
+            domStyle.set(dom.byId('loading'), 'display', 'block');
+        },
         // get population chart data
         queryData: function (geometry) {
             var _self = this;
-
+            _self._showLoading();
             // http://cholula.esri.com:6080/arcgis/rest/services/World/MapServer/exts/BAServer/Geoenrichment/enrich
             // http://geoenrich.arcgis.com/arcgis/rest/services/World/geoenrichmentserver/GeoEnrichment/enrich
             esriRequest({
@@ -124,6 +130,7 @@ function (
                 load: function (data) {
                     var featureSet = data.results[0].value.FeatureSet[0];
                     _self.showData(featureSet);
+                    _self._hideLoading();
                 }
             });
         },

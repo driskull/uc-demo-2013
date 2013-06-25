@@ -4,6 +4,20 @@ html,body {
 	height:100%;
 }
 
+#loading{
+    position: absolute;
+    z-index: 99;
+    top:50%;
+    left:50%;
+    width:80px;
+    height:80px;
+    margin:-40px 0 0 -40px;
+    background: rgba(0,0,0,0.75) url(../img/ajax-loader.gif) center center no-repeat;
+    -webkit-border-radius:5px;
+	border-radius:5px;
+	display: none;
+}
+
 #bc .dijitGutter {
 	display:none;
 }
@@ -115,6 +129,7 @@ html,body {
 	color:#fff;
 	padding:20px;
 	background:rgba(0,0,0,0.75);
+	-webkit-border-radius:5px;
 	border-radius:5px;
 	-webkit-box-shadow:2px 2px 4px 0 rgba(0,0,0,0.6);
 	box-shadow:2px 2px 4px 0 rgba(0,0,0,0.6);
