@@ -91,7 +91,7 @@ function (
             // http://cholula.esri.com:6080/arcgis/rest/services/World/MapServer/exts/BAServer/Geoenrichment/enrich
             // http://geoenrich.arcgis.com/arcgis/rest/services/World/geoenrichmentserver/GeoEnrichment/enrich
             esriRequest({
-                url: 'http://geoenrich.arcgis.com/arcgis/rest/services/World/geoenrichmentserver/GeoEnrichment/enrich',
+                url: 'http://cholula.esri.com:6080/arcgis/rest/services/World/MapServer/exts/BAServer/Geoenrichment/enrich',
                 content: {
                     "studyareas": JSON.stringify([{
                         "geometry": {
