@@ -131,6 +131,9 @@ function (
                     var featureSet = data.results[0].value.FeatureSet[0];
                     _self.showData(featureSet);
                     _self._hideLoading();
+                },
+                error: function(error){
+                    _self._hideLoading();
                 }
             });
         },
@@ -158,16 +161,15 @@ function (
                 node.innerHTML = '<h2>' + TOTHH_CY + '</h2><p>2013 Total Households</p>';
             }
 
-            var AVGHINC_CY = number.format(attributes.AVGHINC_CY);
-            node = dom.byId('AVGHINC_CY');
+            var totalHomeValue = number.format(attributes.AVGVAL_CY * attributes.TOTHH_CY);
+            node = dom.byId('totalHomeValue');
             if (node) {
-                node.innerHTML = '<h2>$' + AVGHINC_CY + '</h2><p>2013 Average Household Income</p>';
+                node.innerHTML = '<h2>$' + totalHomeValue + '</h2><p>Total Home Value</p>';
             }
 
+            
             domStyle.set(dom.byId('geoData'), 'display', 'block');
-
-
-
+            
 
             var chartCats = ["0-4", "5-9", "10-14", "15-19", "20-24", "25-34", "35-44", "45-54", "55-64", "65-74", "75-84", "85+"];
             var chartData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -379,11 +381,11 @@ function (
             if (_self._graphicsLayer) {
                 _self._graphicsLayer.clear();
             }
-            _self._toolbar.deactivate();
         },
         // add drawed geometry to map
         addToMap: function (geometry) {
             var _self = this;
+            _self._toolbar.deactivate();
             if (_self._graphicsLayer) {
                 _self.clearDraw();
             } else {
@@ -391,7 +393,6 @@ function (
                 _self.map.addLayer(_self._graphicsLayer);
             }
             if (geometry) {
-                _self._toolbar.deactivate();
                 var symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT, new Color([255, 0, 0]), 2), new Color([255, 255, 0, 0.25]));
                 var graphic = new Graphic(geometry, symbol);
                 _self._graphicsLayer.add(graphic);
@@ -428,13 +429,22 @@ function (
             _self.createToolbar();
             on(document, "keyup", function (evt) {
                 if (evt.keyCode === keys.ESCAPE) {
-                    _self.clearDraw();
+                    _self._toolbar.deactivate();
                 }
             });
 
         },
 
-
+        _toggleAge: function(){
+            var node = dom.byId('chart');
+            var display = domStyle.get(node, 'display');
+            if(display === 'block'){
+                domStyle.set(node, 'display', 'none');
+            }  
+            else{
+                domStyle.set(node, 'display', 'block');
+            }
+        },
 
         //create a map based on the input web map id
         _createWebMap: function () {
@@ -454,6 +464,7 @@ function (
 
                 this.map = response.map;
 
+                console.log(response);
 
                 var geocoder = new Geocoder({
                     map: this.map
@@ -461,113 +472,118 @@ function (
                 geocoder.startup();
 
 
-
+                on(dom.byId('toggleAge'), 'click', function(){
+                     _self._toggleAge();
+                });
 
                 esriRequest({
                     url: "http://www.digitalglobe.com/firstlookrss/events.rss",
-                    timeout: 20000,
-                    handleAs: "xml",
-                    load: function (xml) {
+                    handleAs: "xml"
+                }).then(function (xml) {
 
-                        var items = query("item", xml);
-                        array.forEach(items, function (item) {
+                    
+                    
+                    
+                    var items = query("item", xml);
+                    array.forEach(items, function (item) {
+                        var attributes = {};
 
-                            var attributes = {};
+                        var imageVal, image = query('image', item);
+                        if (image && image[0] && image[0].firstChild) {
+                            imageVal = image[0].firstChild.nodeValue;
+                            attributes.image = imageVal;
+                        }
 
-                            var imageVal, image = query('image', item);
-                            if (image[0]) {
-                                imageVal = image[0].firstChild.nodeValue;
-                                attributes.image = imageVal;
-                            }
+                        var georssVal, georss = query('*|point', item);
+                        if (georss && georss[0] && georss[0].firstChild) {
+                            georssVal = georss[0].firstChild.nodeValue;
+                        }
+                        
 
+                        var news_urlVal, news_url = query('news_url', item);
+                        if (news_url && news_url[0] && news_url[0].firstChild) {
+                            news_urlVal = news_url[0].firstChild.nodeValue;
+                            attributes.news_url = news_urlVal;
+                        }
 
-                            var georssVal, georss = query('*|point', item);
-                            if (georss[0]) {
-                                georssVal = georss[0].firstChild.nodeValue;
-                                attributes.georss = georssVal;
-                            }
+                        var activeVal, active = query('active', item);
+                        if (active && active[0] && active[0].firstChild) {
+                            activeVal = active[0].firstChild.nodeValue;
+                            attributes.active = activeVal;
+                        }
 
-                            var news_urlVal, news_url = query('news_url', item);
-                            if (news_url[0]) {
-                                news_urlVal = news_url[0].firstChild.nodeValue;
-                                attributes.news_url = news_urlVal;
-                            }
+                        var titleVal, title = query('title', item);
+                        if (title && title[0] && title[0].firstChild) {
+                            titleVal = title[0].firstChild.nodeValue;
+                            attributes.title = titleVal;
+                        }
 
-                            var activeVal, active = query('active', item);
-                            if (active[0]) {
-                                activeVal = active[0].firstChild.nodeValue;
-                                attributes.active = activeVal;
-                            }
+                        var descriptionVal, description = query('description', item);
+                        if (description && description[0] && description[0].firstChild) {
+                            descriptionVal = description[0].firstChild.nodeValue;
+                            attributes.description = descriptionVal;
+                        }
 
-                            var titleVal, title = query('title', item);
-                            if (title[0]) {
-                                titleVal = title[0].firstChild.nodeValue;
-                                attributes.title = titleVal;
-                            }
-
-                            var descriptionVal, description = query('description', item);
-                            if (description[0]) {
-                                descriptionVal = description[0].firstChild.nodeValue;
-                                attributes.description = descriptionVal;
-                            }
-
-                            var categoriesVal, categories = query('categories', item);
-                            if (categories[0]) {
-                                categoriesVal = categories[0].firstChild.nodeValue;
-                                attributes.categories = categoriesVal;
-                            }
-
-
-                            var eventDateVal, eventDate = query('eventDate', item);
-                            if (eventDate[0]) {
-                                eventDateVal = eventDate[0].firstChild.nodeValue;
-                                attributes.eventDate = eventDateVal;
-                            }
+                        var categoriesVal, categories = query('categories', item);
+                        if (categories && categories[0] && categories[0].firstChild) {
+                            categoriesVal = categories[0].firstChild.nodeValue;
+                            attributes.categories = categoriesVal;
+                        }
 
 
+                        var eventDateVal, eventDate = query('eventDate', item);
+                        if (eventDate && eventDate[0] && eventDate[0].firstChild) {
+                            eventDateVal = eventDate[0].firstChild.nodeValue;
+                            attributes.eventDate = eventDateVal;
+                        }
+                    
 
 
-                            var geometry;
-                            if (georssVal) {
-                                var split = georssVal.split(" ");
-                                var y = parseFloat(split[0]);
-                                var x = parseFloat(split[1]);
-                                var pt = new Point(x, y, new SpatialReference({
+                        var geometry, pt;
+                        if (georssVal) {
+                            var split = georssVal.split(" ");
+                            var y = parseFloat(split[0]);
+                            var x = parseFloat(split[1]);
+                            if(x && y){
+                                pt = new Point(x, y, new SpatialReference({
                                     wkid: 4326
-                                }));
-                                if (pt) {
-                                    geometry = webMercatorUtils.geographicToWebMercator(pt);
-                                }
+                                }));   
                             }
-
-                            if (geometry && imageVal) {
-                                var symbol = new PictureMarkerSymbol(imageVal, 32, 32);
-
-                                var html = '';
-                                html += '<p><strong><a href="${news_url}" target="_blank">${title}</a></strong></p>';
-                                html += '<img width="100" height="75" src="${image}" />';
-                                html += '<p>${description}</p>';
-                                html += '<ul>';
-                                html += '<li>${categories}</li>';
-                                html += '<li>${eventDate}</li>';
-                                html += '</ul>';
-
-                                var infoTemplate = new InfoTemplate("${title}", html);
-
-                                var graphic = new Graphic(geometry, symbol, attributes, infoTemplate);
-
-
-
-
-                                _self.map.graphics.add(graphic);
+                            if (pt) {
+                                geometry = webMercatorUtils.geographicToWebMercator(pt);
                             }
+                        }
+
+                        if (geometry) {
+                            var symbol;
+                            if(imageVal){
+                                symbol = new PictureMarkerSymbol(imageVal, 32, 32);
+                            }
+                            else{
+                                symbol = new PictureMarkerSymbol('http://utility.arcgis.com/sharing/rss?image=true', 18.75, 22.5);
+                            }
+                            var html = '';
+                            html += '<p><strong><a href="${news_url}" target="_blank">${title}</a></strong></p>';
+                            html += '<img width="100" height="75" src="${image}" />';
+                            html += '<p>${description}</p>';
+                            html += '<ul>';
+                            html += '<li>${categories}</li>';
+                            html += '<li>${eventDate}</li>';
+                            html += '</ul>';
+
+                            var infoTemplate = new InfoTemplate("${title}", html);
+
+                            var graphic = new Graphic(geometry, symbol, attributes, infoTemplate);
+                            if(graphic){
+                                _self.map.graphics.add(graphic);   
+                            }
+                        }
 
 
 
 
-                        });
+                    });
 
-                    }
                 });
 
 

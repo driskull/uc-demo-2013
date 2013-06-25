@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Digital Globe First Look</title>
+    <title>DigitalGlobe First Look</title>
     <meta charset="utf-8">
     <!--Define the versions of IE that will be used to render the page. See Microsoft documentation for details. Optional.-->
     <meta http-equiv="X-UA-Compatible" content="IE=7, IE=9, IE=10">
@@ -16,24 +16,26 @@
 
     <div id="bc">
         <div id="cptop">
-            <div id="title">Digital Globe First Look</div>
+            <div id="title">DigitalGlobe First Look</div>
+            <div id="geocoder"></div>
+            <div class="clear"></div>
         </div>
         <div id="cpcenter">
              <div id="mapDiv" dir="ltr">
-                 <div id="geocoder"></div>
                <div id="drawContainer"></div>
                <div id="loading"></div>
                <div id="geoData">
+                    <div id="toggleAge">Age Demographics</div><br>
                     <div id="chart">
                         <div class="chartContainer">
                             <canvas id="ageChart" width="800" height="200"></canvas>
                             <div class="caption">Percentage/Age</div>
                         </div>
                     </div>
-                   <div class="panel" id="AVGVAL_CY"></div>
-                   <div class="panel" id="AVGHINC_CY"></div>
-                   <div class="panel" id="TOTPOP_CY"></div>
                    <div class="panel" id="TOTHH_CY"></div>
+                   <div class="panel" id="TOTPOP_CY"></div>
+                   <div class="panel" id="AVGVAL_CY"></div>
+                   <div class="panel" id="totalHomeValue"></div>
                </div>
            </div>
         </div>
