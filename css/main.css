@@ -4,18 +4,18 @@ html,body {
 	height:100%;
 }
 
-#loading{
-    position: absolute;
-    z-index: 99;
-    top:50%;
-    left:50%;
-    width:80px;
-    height:80px;
-    margin:-40px 0 0 -40px;
-    background: rgba(0,0,0,0.75) url(../img/ajax-loader.gif) center center no-repeat;
-    -webkit-border-radius:5px;
+#loading {
+	position:absolute;
+	z-index:99;
+	top:50%;
+	left:50%;
+	width:80px;
+	height:80px;
+	margin:-40px 0 0 -40px;
+	background:rgba(0,0,0,0.75) url(../img/ajax-loader.gif) center center no-repeat;
+	-webkit-border-radius:5px;
 	border-radius:5px;
-	display: none;
+	display:none;
 }
 
 #bc .dijitGutter {
@@ -37,6 +37,13 @@ html,body {
 	border:0;
 }
 
+#cpleft {
+	width:225px;
+	height:100%;
+	margin:0;
+	padding:0;
+}
+
 #cptop {
 	width:100%;
 	height:50px;
@@ -47,12 +54,12 @@ html,body {
 	color:#fff;
 	font-size:32px;
 	line-height:50px;
-	overflow: hidden;
+	overflow:hidden;
 }
 
-#title{
-    margin: 0 20px;
-    float:left;
+#title {
+	margin:0 20px;
+	float:left;
 }
 
 #cpcenter {
@@ -67,21 +74,44 @@ html,body {
 /*Example of a rule that will be applied if the app is viewed in a browser wtih a RTL locale like Hebrew or Arabic.*/
 }
 
-#geocoder{
-    float: right;
-    margin: 9px 20px;
-    height: 32px;
+#geocoder {
+	float:right;
+	margin:9px 20px;
+	height:32px;
 }
 
-#legendDivContainer{
-    position: absolute;
-    top:50px;
-    right:20px;
-    z-index: 99;
-    width:300px;
-    height: 500px;
-    overflow: auto;
-    display: none;
+#legendDivContainer {
+	padding:10px;
+}
+
+#bookmarks {
+	position:absolute;
+	z-index:99;
+	top:20px;
+	right:20px;
+}
+
+#bookmarks .esriBookmarks {
+	border:none;
+	background:rgba(255,255,255,0.8);
+	overflow:hidden;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	font-weight:700;
+	width:auto;
+}
+
+#bookmarks .esriBookmarkLabel {
+}
+
+#bookmarks .esriBookmarkItem {
+	padding:10px;
+}
+
+#bookmarks .esriBookmarkHighlight {
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	background:#fff;
 }
 
 #draw {
@@ -97,7 +127,7 @@ html,body {
 	float:left;
 	padding:10px;
 	border:2px solid #666;
-	font-weight:bold;
+	font-weight:700;
 	background:#fff;
 	color:#666;
 	-webkit-border-radius:5px;
@@ -114,16 +144,16 @@ html,body {
 	border-color:#000;
 }
 
-#toggleAge{
-    display: inline-block;
-    color:#fff;
-	padding:20px 20px 5px 20px;
+#toggleAge {
+	display:inline-block;
+	color:#fff;
+	padding:20px;
 	background:rgba(0,0,0,0.75);
-	-webkit-border-radius:5px 5px 0 0;
-	border-radius:5px 5px 0 0;
-	font-weight: bold;
-	font-size: 24px;
-	cursor: pointer;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	font-weight:700;
+	font-size:18px;
+	cursor:pointer;
 }
 
 #geoData {
@@ -139,6 +169,14 @@ html,body {
 	user-select:none;
 }
 
+.esriAttribution {
+	background:rgba(255,255,255,0.75);
+	color:#333;
+	padding:2px 4px;
+	-webkit-border-radius:2px;
+	border-radius:2px;
+}
+
 #geoData .panel {
 	text-align:center;
 	display:inline-block;
@@ -147,12 +185,12 @@ html,body {
 	background:rgba(0,0,0,0.75);
 	-webkit-border-radius:5px;
 	border-radius:5px;
-	margin:0 10px 20px;
+	margin:20px 10px 0;
 }
 
 #geoData h2 {
-	font-size:45px;
-	font-weight:bold;
+	font-size:40px;
+	font-weight:700;
 	margin:0;
 	padding:0;
 }
@@ -160,33 +198,35 @@ html,body {
 #geoData p {
 	margin:0;
 	padding:0;
-	font-size:18px;
-	font-weight:bold;
+	font-size:16px;
+	font-weight:700;
 }
 
 #chart {
 	display:none;
 	text-align:center;
-	margin-bottom:20px;
+	margin-top:20px;
 }
-#chart .chartContainer{
-    background:rgba(0,0,0,0.75);
+
+#chart .chartContainer {
+	background:rgba(0,0,0,0.75);
 	padding:10px;
 	-webkit-border-radius:5px;
 	border-radius:5px;
-    display:inline-block;
+	display:inline-block;
 }
 
 #chart .caption{
     color:#fff;
     font-weight:bold;
-    font-size: 12px;
+    font-size: 18px;
 }
+
 
 #ageChart {
 	display:inline-block;
 }
 
-.clear{
-    clear:both;
+.clear {
+	clear:both;
 }

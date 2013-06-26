@@ -20,22 +20,30 @@
             <div id="geocoder"></div>
             <div class="clear"></div>
         </div>
+        <div id="cpleft">
+            <div id="legendDivContainer">
+               <div id="legendDiv"></div>
+           </div>
+        </div>
         <div id="cpcenter">
              <div id="mapDiv" dir="ltr">
                <div id="drawContainer"></div>
+               <div id="bookmarks"></div>
                <div id="loading"></div>
                <div id="geoData">
-                    <div id="toggleAge">Age Demographics</div><br>
+                    <div id="toggleAge">Show Age Demographics</div><br>
                     <div id="chart">
                         <div class="chartContainer">
                             <canvas id="ageChart" width="800" height="200"></canvas>
-                            <div class="caption">Percentage/Age</div>
+                            <div class="caption">Population Age</div>
                         </div>
                     </div>
-                   <div class="panel" id="TOTHH_CY"></div>
-                   <div class="panel" id="TOTPOP_CY"></div>
-                   <div class="panel" id="AVGVAL_CY"></div>
-                   <div class="panel" id="totalHomeValue"></div>
+                   <div id="panels">
+                       <div class="panel" id="TOTHH_CY"></div>
+                       <div class="panel" id="TOTPOP_CY"></div>
+                       <div class="panel" id="AVGVAL_CY"></div>
+                       <div class="panel" id="totalHomeValue"></div>
+                   </div>
                </div>
            </div>
         </div>

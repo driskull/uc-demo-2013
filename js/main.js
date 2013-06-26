@@ -29,6 +29,7 @@ define([
     "esri/InfoTemplate",
     "esri/dijit/Geocoder",
     "esri/dijit/Legend",
+    "esri/dijit/Bookmarks",
     "dojo/keys"
 ],
 function (
@@ -50,6 +51,7 @@ function (
     InfoTemplate,
     Geocoder,
     Legend,
+    Bookmarks,
     keys
 ) {
     return declare("", null, {
@@ -74,9 +76,15 @@ function (
 
                 // create a ContentPane as the center pane in the BorderContainer
                 var cp2 = new ContentPane({
-                    region: "center",
+                    region: "center"
                 }, dom.byId('cpcenter'));
                 bc.addChild(cp2);
+                
+                var cp3 = new ContentPane({
+                    region: "left"
+                }, dom.byId('cpleft'));
+                bc.addChild(cp3);
+                
 
                 bc.startup();
 
@@ -302,7 +310,7 @@ function (
             var options = {
 
                 //Boolean - If we show the scale above the chart data			
-                scaleOverlay: false,
+                scaleOverlay: true,
 
                 //Boolean - If we want to override with a hard coded scale
                 scaleOverride: false,
@@ -322,7 +330,7 @@ function (
                 scaleLineWidth: 1,
 
                 //Boolean - Whether to show labels on the scale	
-                scaleShowLabels: false,
+                scaleShowLabels: true,
 
                 //Interpolated JS string - can access value
                 scaleLabel: "<%=value%>",
@@ -437,12 +445,18 @@ function (
 
         _toggleAge: function(){
             var node = dom.byId('chart');
+            var panels = dom.byId('panels');
+            var toggleAge = dom.byId('toggleAge');
             var display = domStyle.get(node, 'display');
             if(display === 'block'){
                 domStyle.set(node, 'display', 'none');
+                domStyle.set(panels, 'display', 'block');
+                toggleAge.innerHTML = 'Show Age Demographics';
             }  
             else{
                 domStyle.set(node, 'display', 'block');
+                domStyle.set(panels, 'display', 'none');
+                toggleAge.innerHTML = 'Hide Age Demographics';
             }
         },
 
@@ -470,6 +484,16 @@ function (
                     map: this.map
                 }, dom.byId("geocoder"));
                 geocoder.startup();
+                
+                var legend = new Legend({
+                    map: this.map
+                  }, "legendDiv");
+                  legend.startup();
+                
+                var bm = new Bookmarks({
+                    map: this.map,
+                    bookmarks: response.itemInfo.itemData.bookmarks
+                }, dom.byId("bookmarks"));
 
 
                 on(dom.byId('toggleAge'), 'click', function(){
