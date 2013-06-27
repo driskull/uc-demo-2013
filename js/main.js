@@ -28,7 +28,6 @@ define([
     "esri/SpatialReference",
     "esri/InfoTemplate",
     "esri/dijit/Geocoder",
-    "esri/dijit/Legend",
     "esri/dijit/Bookmarks",
     "dojo/keys"
 ],
@@ -50,7 +49,6 @@ function (
     SpatialReference,
     InfoTemplate,
     Geocoder,
-    Legend,
     Bookmarks,
     keys
 ) {
@@ -79,12 +77,6 @@ function (
                     region: "center"
                 }, dom.byId('cpcenter'));
                 bc.addChild(cp2);
-                
-                var cp3 = new ContentPane({
-                    region: "left"
-                }, dom.byId('cpleft'));
-                bc.addChild(cp3);
-                
 
                 bc.startup();
 
@@ -306,7 +298,6 @@ function (
                 }]
             };
 
-
             var options = {
 
                 //Boolean - If we show the scale above the chart data			
@@ -484,11 +475,6 @@ function (
                     map: this.map
                 }, dom.byId("geocoder"));
                 geocoder.startup();
-                
-                var legend = new Legend({
-                    map: this.map
-                  }, "legendDiv");
-                  legend.startup();
                 
                 var bm = new Bookmarks({
                     map: this.map,
