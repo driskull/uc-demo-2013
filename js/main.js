@@ -18,6 +18,7 @@ define([
     "esri/request",
     "dojo/json",
     "dojo/dom-style",
+    "dojo/dom-class",
     "dojo/number",
     "dijit/layout/BorderContainer",
     "dijit/layout/ContentPane",
@@ -39,7 +40,7 @@ function (
     array,
     arcgisUtils,
     IdentityManager,
-    on, dom, domConstruct, Draw, GraphicsLayer, Graphic, SimpleFillSymbol, SimpleLineSymbol, Color, esriRequest, JSON, domStyle,
+    on, dom, domConstruct, Draw, GraphicsLayer, Graphic, SimpleFillSymbol, SimpleLineSymbol, Color, esriRequest, JSON, domStyle, domClass,
     number,
     BorderContainer, ContentPane,
     PictureMarkerSymbol,
@@ -90,14 +91,14 @@ function (
         _showLoading: function(){
             domStyle.set(dom.byId('loading'), 'display', 'block');
         },
-        // get population chart data
+        // get data
         queryData: function (geometry) {
             var _self = this;
             _self._showLoading();
             // http://cholula.esri.com:6080/arcgis/rest/services/World/MapServer/exts/BAServer/Geoenrichment/enrich
             // http://geoenrich.arcgis.com/arcgis/rest/services/World/geoenrichmentserver/GeoEnrichment/enrich
             esriRequest({
-                url: 'http://cholula.esri.com:6080/arcgis/rest/services/World/MapServer/exts/BAServer/Geoenrichment/enrich',
+                url: 'http://geoenrich.arcgis.com/arcgis/rest/services/World/geoenrichmentserver/GeoEnrichment/enrich',
                 content: {
                     "studyareas": JSON.stringify([{
                         "geometry": {
@@ -116,7 +117,7 @@ function (
                     "usedata": JSON.stringify({
                         "sourcecountry": "US"
                     }),
-                    "datacollections": JSON.stringify(["KeyUSFacts", "Age"]),
+                    "datacollections": JSON.stringify(["KeyUSFacts"]),
                     "insr": JSON.stringify({
                         "wkid": geometry.spatialReference.wkid
                     }),
@@ -169,211 +170,7 @@ function (
 
             
             domStyle.set(dom.byId('geoData'), 'display', 'block');
-            
 
-            var chartCats = ["0-4", "5-9", "10-14", "15-19", "20-24", "25-34", "35-44", "45-54", "55-64", "65-74", "75-84", "85+"];
-            var chartData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            var i;
-            // create series objects
-            if (fs.fields) {
-                for (i = 0; i < fs.fields.length; i++) {
-                    if (fs.fields[i].name === 'MALE0') {
-                        chartData[0] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE5') {
-                        chartData[1] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE10') {
-                        chartData[2] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE15') {
-                        chartData[3] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE20') {
-                        chartData[4] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE25') {
-                        chartData[5] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE30') {
-                        chartData[5] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE35') {
-                        chartData[6] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE40') {
-                        chartData[6] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE45') {
-                        chartData[7] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE50') {
-                        chartData[7] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE55') {
-                        chartData[8] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE60') {
-                        chartData[8] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE65') {
-                        chartData[9] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE70') {
-                        chartData[9] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE75') {
-                        chartData[10] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE80') {
-                        chartData[10] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'MALE85') {
-                        chartData[11] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM0') {
-                        chartData[0] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM5') {
-                        chartData[1] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM10') {
-                        chartData[2] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM15') {
-                        chartData[3] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM20') {
-                        chartData[4] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM25') {
-                        chartData[5] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM30') {
-                        chartData[5] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM35') {
-                        chartData[6] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM40') {
-                        chartData[6] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM45') {
-                        chartData[7] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM50') {
-                        chartData[7] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM55') {
-                        chartData[8] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM60') {
-                        chartData[8] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM65') {
-                        chartData[9] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM70') {
-                        chartData[9] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM75') {
-                        chartData[10] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM80') {
-                        chartData[10] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                    if (fs.fields[i].name === 'FEM85') {
-                        chartData[11] += fs.features[0].attributes[fs.fields[i].name];
-                    }
-                }
-            }
-
-
-            var data = {
-                labels: chartCats,
-                datasets: [{
-                    fillColor: "rgba(220,220,220,0.5)",
-                    strokeColor: "rgba(220,220,220,1)",
-                    data: chartData
-                }]
-            };
-
-            var options = {
-
-                //Boolean - If we show the scale above the chart data			
-                scaleOverlay: true,
-
-                //Boolean - If we want to override with a hard coded scale
-                scaleOverride: false,
-
-                //** Required if scaleOverride is true **
-                //Number - The number of steps in a hard coded scale
-                scaleSteps: null,
-                //Number - The value jump in the hard coded scale
-                scaleStepWidth: null,
-                //Number - The scale starting value
-                scaleStartValue: null,
-
-                //String - Colour of the scale line	
-                scaleLineColor: "rgba(255,255,255,.1)",
-
-                //Number - Pixel width of the scale line	
-                scaleLineWidth: 1,
-
-                //Boolean - Whether to show labels on the scale	
-                scaleShowLabels: true,
-
-                //Interpolated JS string - can access value
-                scaleLabel: "<%=value%>",
-
-                //String - Scale label font declaration for the scale label
-                scaleFontFamily: "'Arial'",
-
-                //Number - Scale label font size in pixels	
-                scaleFontSize: 16,
-
-                //String - Scale label font weight style	
-                scaleFontStyle: "bold",
-
-                //String - Scale label font colour	
-                scaleFontColor: "#fff",
-
-                ///Boolean - Whether grid lines are shown across the chart
-                scaleShowGridLines: true,
-
-                //String - Colour of the grid lines
-                scaleGridLineColor: "rgba(255,255,255,.05)",
-
-                //Number - Width of the grid lines
-                scaleGridLineWidth: 1,
-
-                //Boolean - If there is a stroke on each bar	
-                barShowStroke: true,
-
-                //Number - Pixel width of the bar stroke	
-                barStrokeWidth: 2,
-
-                //Number - Spacing between each of the X value sets
-                barValueSpacing: 5,
-
-                //Number - Spacing between data sets within X values
-                barDatasetSpacing: 1,
-
-                //Boolean - Whether to animate the chart
-                animation: true,
-
-                //Number - Number of animation steps
-                animationSteps: 60,
-
-                //String - Animation easing effect
-                animationEasing: "easeOutQuart",
-
-                //Function - Fires when the animation is complete
-                onAnimationComplete: null
-
-            };
-            var ctx = document.getElementById("ageChart").getContext("2d");
-            this._chart = new Chart(ctx).Bar(data, options);
         },
         clearDraw: function () {
             var _self = this;
@@ -397,6 +194,7 @@ function (
                 _self._graphicsLayer.add(graphic);
                 _self.queryData(geometry);
             }
+            domStyle.set(dom.byId('clearButton'), 'display', 'block');
         },
         // create drawing toolbar
         createToolbar: function () {
@@ -409,7 +207,6 @@ function (
         toggleDraw: function () {
             var _self = this;
             _self._toolbar.activate(Draw.POLYGON);
-            domStyle.set(dom.byId('clearButton'), 'display', 'block');
         },
         placeDrawButton: function () {
             var _self = this;
@@ -433,24 +230,20 @@ function (
             });
 
         },
-
-        _toggleAge: function(){
-            var node = dom.byId('chart');
-            var panels = dom.byId('panels');
-            var toggleAge = dom.byId('toggleAge');
+        _toggleBMList: function(){
+            var _self = this;
+            var node = dom.byId('bookmarks');
+            var btn = dom.byId('bmToggle');
             var display = domStyle.get(node, 'display');
             if(display === 'block'){
                 domStyle.set(node, 'display', 'none');
-                domStyle.set(panels, 'display', 'block');
-                toggleAge.innerHTML = 'Show Age Demographics';
-            }  
+                domClass.remove(btn, 'open');
+            }
             else{
                 domStyle.set(node, 'display', 'block');
-                domStyle.set(panels, 'display', 'none');
-                toggleAge.innerHTML = 'Hide Age Demographics';
+                domClass.add(btn, 'open');
             }
         },
-
         //create a map based on the input web map id
         _createWebMap: function () {
             var _self = this;
@@ -481,9 +274,13 @@ function (
                     bookmarks: response.itemInfo.itemData.bookmarks
                 }, dom.byId("bookmarks"));
 
-
-                on(dom.byId('toggleAge'), 'click', function(){
-                     _self._toggleAge();
+                
+                on(window, "resize", function(){
+                   _self.map.resize(); 
+                });
+                
+                on(dom.byId('bmToggle'), 'click', function(){
+                    _self._toggleBMList();
                 });
 
                 esriRequest({
