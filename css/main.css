@@ -5,6 +5,23 @@ html,body {
 	font-family:Arial,Helvetica,sans-serif;
 }
 
+.moveable {
+position:absolute;
+border-left:1px solid #848484;
+border-right:1px solid #848484;
+background-color: #dadada;
+width: 6px;
+height: 100%;
+padding: 0 !important;
+margin: 0;
+z-index: 30;
+cursor: col-resize;
+}
+
+.moveable:hover {
+background-color:#999;
+}
+
 #loading {
 	position:absolute;
 	z-index:99;
@@ -103,6 +120,7 @@ html,body {
 	background-image:url(../img/circle_arrow_right.png);
 	background-repeat:no-repeat;
 	background-position:95% center;
+    line-height:16px;
 }
 
 #bmToggle.open {
